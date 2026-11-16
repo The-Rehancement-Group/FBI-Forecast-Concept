@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forecast Management Concept | The Rehancement Group</title>
+<meta name="description" content="A concept from The Rehancement Group for managing the FBI’s entries in the DOJ Forecast of Contracting Opportunities, designed to run on Microsoft Power Platform.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#21325F; --ink:#1B2233; --muted:#55607A; --paper:#F4F6F9; --line:#D9DEE7; --tint:#E9EEF6;
+  --red:#D61C00; --sky:#2F7FD8; --white:#FFFFFF;
+  --font:"Public Sans","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper)}
+body{color:var(--ink);font:15px/1.5 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--sky)}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+img{display:block}
+
+/* ---------- shared pieces ---------- */
+.top{display:flex;align-items:center;gap:16px;height:64px;padding:0 28px;background:var(--white);border-bottom:1px solid var(--line)}
+.top .logo{height:38px;width:auto}
+.tag{font-size:13px;font-weight:600;color:var(--navy);border:1.5px solid var(--navy);border-radius:999px;padding:4px 12px;white-space:nowrap}
+.btn{margin-left:auto;display:inline-flex;align-items:center;gap:9px;background:var(--navy);color:var(--white);text-decoration:none;font-weight:600;font-size:15px;padding:10px 18px;border-radius:7px;white-space:nowrap}
+.btn:hover{background:#18264A}
+.btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+h1{margin:0;font-size:28px;line-height:1.2;letter-spacing:-0.01em;color:var(--navy);font-weight:700;padding-left:16px;border-left:5px solid var(--red)}
+.player{background:var(--navy);border-radius:10px;overflow:hidden;box-shadow:0 14px 40px rgba(33,50,95,.22);aspect-ratio:16/9}
+.player video{display:block;width:100%;height:100%}
+.runs{display:flex;align-items:center;gap:8px 20px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+.runs .lbl{font-weight:600;color:var(--ink)}
+.prod{display:inline-flex;align-items:center;gap:7px}
+.prod img{width:22px;height:22px}
+
+.panel{display:flex;flex-direction:column;background:var(--white);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.tabs{flex:none;display:flex;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;font:inherit;font-size:14px;font-weight:600;color:var(--muted);background:none;border:0;border-bottom:3px solid transparent;padding:14px 6px 11px;cursor:pointer;white-space:nowrap}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--red)}
+.pbody{flex:1;min-height:0;padding:20px 24px 16px}
+.pbody .intro{margin:0 0 14px;color:var(--muted);font-size:14px}
+[role=tabpanel][hidden]{display:none}
+
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{position:relative;padding:0 0 13px 48px}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;border:2px solid var(--navy);display:grid;place-items:center;font-weight:700;color:var(--navy);background:var(--white);z-index:1}
+.steps li::after{content:"";position:absolute;left:15px;top:34px;bottom:2px;width:2px;background:var(--line)}
+.steps li:last-child{padding-bottom:0}
+.steps li:last-child::after{display:none}
+.who{display:inline-block;font-size:12px;font-weight:600;color:var(--navy);background:var(--tint);border-radius:4px;padding:1px 7px;margin-bottom:3px}
+.steps h3,.helps h3,.why h3{font-size:15px;margin:0 0 2px}
+.steps p,.helps p,.why p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
+
+.helps{list-style:none;margin:0;padding:0}
+.helps li{padding:0 0 0 16px;border-left:3px solid var(--line);margin-bottom:14px}
+.helps li:last-child{margin-bottom:0;padding-bottom:0}
+
+.why{list-style:none;margin:0;padding:0}
+.why li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;padding:0 0 20px}
+.why li:last-child{padding-bottom:0}
+.icons{display:flex;flex-direction:column;gap:6px;align-items:center}
+.icons img{width:36px;height:36px}
+
+.contact{flex:none;border-top:1px solid var(--line);padding:10px 24px 12px;font-size:13.5px;color:var(--muted);background:var(--paper)}
+.contact p{margin:0}
+.contact .ppl{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;line-height:1.45}
+.contact .q{margin:0 0 4px}
+.contact .q{font-weight:600;color:var(--ink)}
+.contact b{color:var(--ink)}
+
+footer{color:var(--muted);font-size:12px;line-height:1.45;display:flex;gap:4px 24px;flex-wrap:wrap;justify-content:space-between}
+footer p{margin:0}
+
+/* ---------- desktop and landscape tablets: fixed canvas scaled to fit, never scrolls ---------- */
+@media (orientation:landscape) and (min-width:900px){
+  html,body{height:100%;overflow:hidden}
+  .canvas{position:absolute;left:50%;top:50%;width:1440px;height:810px;transform:translate(-50%,-50%) scale(var(--s,1));transform-origin:center center;display:flex;flex-direction:column;background:var(--paper)}
+  .stage{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:28px;padding:20px 28px 12px}
+  .left{display:flex;flex-direction:column;justify-content:center;gap:14px;min-height:0}
+  .player{width:100%}
+  .panel{min-height:0}
+  footer{padding:6px 28px 12px}
+  .backdrop{position:fixed;inset:0;background:var(--paper)}
+  .topfill{position:fixed;left:0;right:0;top:0;height:calc(50vh - 405px * var(--s,1) + 64px * var(--s,1));background:var(--white);border-bottom:1px solid var(--line)}
+}
+
+/* ---------- phones and portrait tablets: simple stacked page ---------- */
+@media (orientation:portrait),(max-width:899px){
+  .backdrop,.topfill{display:none}
+  .top{position:sticky;top:0;z-index:5;padding:0 18px;height:60px}
+  .top .logo{height:32px}
+  .stage{padding:20px 18px 8px;max-width:760px;margin:0 auto}
+  h1{font-size:23px;margin-bottom:16px}
+  .runs{margin:14px 0 22px;font-size:12.5px}
+  .tabs button{flex:1 1 0;white-space:normal;line-height:1.25;font-size:13.5px;padding:12px 6px 10px}
+  .pbody{padding:20px 18px}
+  .contact{padding:14px 18px}
+  footer{padding:18px 18px 28px;max-width:760px;margin:0 auto}
+}
+@media (max-width:560px){
+  .contact .ppl{grid-template-columns:1fr;gap:10px}
+  .tag{display:none}
+  .btn{font-size:14px;padding:9px 13px}
+  .btn .long{display:none}
+}
+@media (min-width:561px){.btn .short{display:none}}
+</style>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"></div>
+<div class="topfill" aria-hidden="true"></div>
+<div class="canvas">
+<header class="top">
+  <img class="logo" src="assets/trg-logo.png" alt="The Rehancement Group">
+  <span class="tag">Concept demonstration</span>
+  <a class="btn" href="https://the-rehancement-group.github.io/FBI_Forecast_Manager/" target="_blank" rel="noopener"><span class="long">Open the interactive concept</span><span class="short">Try the concept</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
+</header>
+
+<main class="stage">
+  <div class="left">
+    <h1>Keeping the FBI’s forecast entries current, without the spreadsheet cleanup</h1>
+    <div class="player">
+      <video controls preload="metadata" playsinline poster="assets/poster.jpg" aria-label="Two-minute walkthrough of the forecast management concept">
+        <source src="assets/forecast-walkthrough.mp4" type="video/mp4">
+        Your browser can’t play this video. <a href="assets/forecast-walkthrough.mp4">Download the walkthrough</a>.
+      </video>
+    </div>
+    <div class="runs">
+      <span class="lbl">Designed to run on</span>
+      <span class="prod"><img src="assets/power-apps.png" alt="">Power Apps</span>
+      <span class="prod"><img src="assets/power-automate.png" alt="">Power Automate</span>
+      <span class="prod"><img src="assets/sharepoint.png" alt="">SharePoint</span>
+      <span class="prod"><img src="assets/outlook.png" alt="">Outlook</span>
+    </div>
+  </div>
+
+  <aside class="panel" aria-label="About the concept">
+    <div class="tabs" role="tablist" aria-label="About the concept">
+      <button role="tab" id="t1" aria-controls="p1" aria-selected="true">How it works</button>
+      <button role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">What it helps with</button>
+      <button role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1">Why Power Platform</button>
+    </div>
+    <div class="pbody">
+      <section role="tabpanel" id="p1" aria-labelledby="t1">
+        <p class="intro">From the person who owns the requirement to DOJ’s format, with the Small Business POC approving every change.</p>
+        <ol class="steps">
+          <li><span class="who">Requirement owner</span><h3>Enters or updates an entry</h3><p>A guided form with picklists. Checks confirm required details before it’s submitted.</p></li>
+          <li><span class="who">Small Business POC</span><h3>Gets an email right away</h3><p>Key details and open items, one click from the submission.</p></li>
+          <li><span class="who">Small Business POC</span><h3>Reviews and approves</h3><p>Changes shown side by side. Approve, adjust, or send back with a note.</p></li>
+          <li><span class="who">Small Business POC</span><h3>Exports in DOJ’s format</h3><p>DOJ’s 34-column layout, ready to submit with no reformatting.</p></li>
+        </ol>
+      </section>
+      <section role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+        <p class="intro">Common challenges in keeping a shared forecast current, and how the concept is designed to address them.</p>
+        <ul class="helps">
+          <li><h3>Consistent entries</h3><p>Picklists and directory lookups keep names, codes, and dates in one format.</p></li>
+          <li><h3>Missing or outdated details</h3><p>Update requests go only to the owners who need them and list exactly what’s missing.</p></li>
+          <li><h3>Errors caught before submission</h3><p>A health check flags issues like duplicate tracking numbers, and holds any fix that changes meaning for review.</p></li>
+          <li><h3>A clear record of changes</h3><p>Every change is reviewed before it’s published, with a history of who changed what.</p></li>
+          <li><h3>Ready-to-submit export</h3><p>One click produces DOJ’s 34-column format.</p></li>
+        </ul>
+      </section>
+      <section role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+        <p class="intro">The concept is designed for tools that are part of Microsoft 365.</p>
+        <ul class="why">
+          <li><span class="icons"><img src="assets/sharepoint.png" alt="SharePoint"></span><div><h3>Data stays in the FBI’s environment</h3><p>Entries would live in a SharePoint list in the FBI’s own Microsoft 365 tenant. Nothing moves to an outside system.</p></div></li>
+          <li><span class="icons"><img src="assets/power-apps.png" alt="Power Apps"></span><div><h3>Nothing new to install</h3><p>The app would be built in Power Apps, so there’s no new software to approve or maintain.</p></div></li>
+          <li><span class="icons"><img src="assets/power-automate.png" alt="Power Automate"><img src="assets/outlook.png" alt="Outlook"></span><div><h3>Notifications in familiar tools</h3><p>Power Automate would send update requests and alerts through Outlook. It’s designed around standard connectors, so it shouldn’t need premium licenses.</p></div></li>
+        </ul>
+      </section>
+    </div>
+    <div class="contact">
+      <p class="q">Questions? Contact us.</p>
+      <div class="ppl">
+        <div><b>Matt Williams</b><br><a href="mailto:mwilliams@rehancement.com">mwilliams@rehancement.com</a><br><a href="tel:+15714296641">571&#8209;429&#8209;6641</a></div>
+        <div><b>Chris Rosado</b><br><a href="mailto:crosado@rehancement.com">crosado@rehancement.com</a><br><a href="tel:+15714824737">571&#8209;482&#8209;4737</a></div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  <p>Concept demonstration only. Not connected to any DOJ or FBI system. Sample data from the DOJ Forecast of Contracting Opportunities published August 27, 2026.</p>
+  <p>Microsoft, Power Apps, Power Automate, SharePoint, and Outlook are trademarks of the Microsoft group of companies.</p>
+</footer>
+</div>
+
+<script>
+const tabs=[...document.querySelectorAll('[role=tab]')];
+function select(t){tabs.forEach(b=>{const on=b===t;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;document.getElementById(b.getAttribute('aria-controls')).hidden=!on})}
+tabs.forEach((t,i)=>{t.addEventListener('click',()=>select(t));t.addEventListener('keydown',e=>{let j=null;if(e.key==='ArrowRight')j=(i+1)%tabs.length;if(e.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;if(e.key==='Home')j=0;if(e.key==='End')j=tabs.length-1;if(j!==null){e.preventDefault();select(tabs[j]);tabs[j].focus()}})});
+const desk=matchMedia('(orientation:landscape) and (min-width:900px)');
+function fit(){document.documentElement.style.setProperty('--s',desk.matches?Math.min(innerWidth/1440,innerHeight/810):1)}
+addEventListener('resize',fit);desk.addEventListener('change',fit);fit();
+</script>
+</body>
+</html>
