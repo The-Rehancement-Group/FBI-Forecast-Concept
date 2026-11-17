@@ -28,7 +28,9 @@ img{display:block}
 .btn{margin-left:auto;display:inline-flex;align-items:center;gap:9px;background:var(--navy);color:var(--white);text-decoration:none;font-weight:600;font-size:15px;padding:10px 18px;border-radius:7px;white-space:nowrap}
 .btn:hover{background:#18264A}
 .btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-h1{margin:0;font-size:28px;line-height:1.2;letter-spacing:-0.01em;color:var(--navy);font-weight:700;padding-left:16px;border-left:5px solid var(--red)}
+.heading{padding-left:16px;border-left:5px solid var(--red)}
+h1{margin:0;font-size:28px;line-height:1.2;letter-spacing:-0.01em;color:var(--navy);font-weight:700}
+.lede{margin:6px 0 0;color:var(--muted);font-size:15.5px;line-height:1.45;max-width:72ch}
 .player{background:var(--navy);border-radius:10px;overflow:hidden;box-shadow:0 14px 40px rgba(33,50,95,.22);aspect-ratio:16/9}
 .player video{display:block;width:100%;height:100%}
 .runs{display:flex;align-items:center;gap:8px 20px;flex-wrap:wrap;color:var(--muted);font-size:13px}
@@ -42,7 +44,7 @@ h1{margin:0;font-size:28px;line-height:1.2;letter-spacing:-0.01em;color:var(--na
 .tabs button:hover{color:var(--ink)}
 .tabs button[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--red)}
 .pbody{flex:1;min-height:0;padding:20px 24px 16px}
-.pbody .intro{margin:0 0 14px;color:var(--muted);font-size:14px}
+.pbody .intro{margin:0 0 10px;color:var(--muted);font-size:14px}
 [role=tabpanel][hidden]{display:none}
 
 .steps{list-style:none;margin:0;padding:0;counter-reset:s}
@@ -56,7 +58,7 @@ h1{margin:0;font-size:28px;line-height:1.2;letter-spacing:-0.01em;color:var(--na
 .steps p,.helps p,.why p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
 
 .helps{list-style:none;margin:0;padding:0}
-.helps li{padding:0 0 0 16px;border-left:3px solid var(--line);margin-bottom:14px}
+.helps li{padding:0 0 0 14px;border-left:3px solid var(--line);margin-bottom:11px}
 .helps li:last-child{margin-bottom:0;padding-bottom:0}
 
 .why{list-style:none;margin:0;padding:0}
@@ -79,10 +81,11 @@ footer p{margin:0}
 @media (orientation:landscape) and (min-width:900px){
   html,body{height:100%;overflow:hidden}
   .canvas{position:absolute;left:50%;top:50%;width:1440px;height:810px;transform:translate(-50%,-50%) scale(var(--s,1));transform-origin:center center;display:flex;flex-direction:column;background:var(--paper)}
-  .stage{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:28px;padding:20px 28px 12px}
+  .stage{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 470px;gap:28px;padding:20px 28px 12px}
   .left{display:flex;flex-direction:column;justify-content:center;gap:14px;min-height:0}
   .player{width:100%}
   .panel{min-height:0}
+  .pbody{overflow-y:auto}
   footer{padding:6px 28px 12px}
   .backdrop{position:fixed;inset:0;background:var(--paper)}
   .topfill{position:fixed;left:0;right:0;top:0;height:calc(50vh - 405px * var(--s,1) + 64px * var(--s,1));background:var(--white);border-bottom:1px solid var(--line)}
@@ -94,7 +97,9 @@ footer p{margin:0}
   .top{position:sticky;top:0;z-index:5;padding:0 18px;height:60px}
   .top .logo{height:32px}
   .stage{padding:20px 18px 8px;max-width:760px;margin:0 auto}
-  h1{font-size:23px;margin-bottom:16px}
+  .heading{margin-bottom:16px}
+  h1{font-size:23px}
+  .lede{font-size:15px}
   .runs{margin:14px 0 22px;font-size:12.5px}
   .tabs button{flex:1 1 0;white-space:normal;line-height:1.25;font-size:13.5px;padding:12px 6px 10px}
   .pbody{padding:20px 18px}
@@ -123,7 +128,8 @@ footer p{margin:0}
 
 <main class="stage">
   <div class="left">
-    <h1>Keeping the FBI’s forecast entries current, without the spreadsheet cleanup</h1>
+    <div class="heading"><h1>A current forecast to support the FBI’s small business mission</h1>
+    <p class="lede">A concept to reduce the effort of collecting, checking, and consolidating forecast updates, giving the Small Business Program more time for acquisition teams and small business outreach.</p></div>
     <div class="player">
       <video controls preload="metadata" playsinline poster="assets/poster.jpg" aria-label="Two-minute walkthrough of the forecast management concept">
         <source src="assets/forecast-walkthrough.mp4" type="video/mp4">
@@ -141,12 +147,22 @@ footer p{margin:0}
 
   <aside class="panel" aria-label="About the concept">
     <div class="tabs" role="tablist" aria-label="About the concept">
-      <button role="tab" id="t1" aria-controls="p1" aria-selected="true">How it works</button>
-      <button role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">What it helps with</button>
+      <button role="tab" id="t1" aria-controls="p1" aria-selected="true">Value to the SBP</button>
+      <button role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">How it works</button>
       <button role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1">Why Power Platform</button>
     </div>
     <div class="pbody">
       <section role="tabpanel" id="p1" aria-labelledby="t1">
+        <p class="intro">The forecast is often where small businesses first learn about upcoming FBI requirements. Keeping it current helps give small business interests maximum consideration.</p>
+        <ul class="helps">
+          <li><h3>Less time chasing updates</h3><p>Targeted requests and response tracking reduce manual follow-up with requirement owners.</p></li>
+          <li><h3>More current information for acquisition discussions</h3><p>Consistent descriptions, dates, and acquisition approaches give a stronger starting point with requirement owners and contracting staff.</p></li>
+          <li><h3>Better information for small business outreach</h3><p>Accurate NAICS codes, values, and dates help small businesses see where they fit and prepare in time.</p></li>
+          <li><h3>Review effort focused where judgment matters</h3><p>Routine checks flag missing details and formatting issues, so review time goes to changes that need a decision.</p></li>
+          <li><h3>A simpler submission</h3><p>Approved entries export directly to DOJ’s format, with no consolidation or reformatting.</p></li>
+        </ul>
+      </section>
+      <section role="tabpanel" id="p2" aria-labelledby="t2" hidden>
         <p class="intro">From the person who owns the requirement to DOJ’s format, with the Small Business POC approving every change.</p>
         <ol class="steps">
           <li><span class="who">Requirement owner</span><h3>Enters or updates an entry</h3><p>A guided form with picklists. Checks confirm required details before it’s submitted.</p></li>
@@ -155,21 +171,11 @@ footer p{margin:0}
           <li><span class="who">Small Business POC</span><h3>Exports in DOJ’s format</h3><p>DOJ’s 34-column layout, ready to submit with no reformatting.</p></li>
         </ol>
       </section>
-      <section role="tabpanel" id="p2" aria-labelledby="t2" hidden>
-        <p class="intro">Common challenges in keeping a shared forecast current, and how the concept is designed to address them.</p>
-        <ul class="helps">
-          <li><h3>Consistent entries</h3><p>Picklists and directory lookups keep names, codes, and dates in one format.</p></li>
-          <li><h3>Missing or outdated details</h3><p>Update requests go only to the owners who need them and list exactly what’s missing.</p></li>
-          <li><h3>Errors caught before submission</h3><p>A health check flags issues like duplicate tracking numbers, and holds any fix that changes meaning for review.</p></li>
-          <li><h3>A clear record of changes</h3><p>Every change is reviewed before it’s published, with a history of who changed what.</p></li>
-          <li><h3>Ready-to-submit export</h3><p>One click produces DOJ’s 34-column format.</p></li>
-        </ul>
-      </section>
       <section role="tabpanel" id="p3" aria-labelledby="t3" hidden>
         <p class="intro">The concept is designed for tools that are part of Microsoft 365.</p>
         <ul class="why">
           <li><span class="icons"><img src="assets/sharepoint.png" alt="SharePoint"></span><div><h3>Data stays in the FBI’s environment</h3><p>Entries would live in a SharePoint list in the FBI’s own Microsoft 365 tenant. Nothing moves to an outside system.</p></div></li>
-          <li><span class="icons"><img src="assets/power-apps.png" alt="Power Apps"></span><div><h3>Nothing new to install</h3><p>The app would be built in Power Apps, so there’s no new software to approve or maintain.</p></div></li>
+          <li><span class="icons"><img src="assets/power-apps.png" alt="Power Apps"></span><div><h3>Familiar Microsoft tools</h3><p>The app would be built in Power Apps, part of Microsoft 365, rather than as separate software.</p></div></li>
           <li><span class="icons"><img src="assets/power-automate.png" alt="Power Automate"><img src="assets/outlook.png" alt="Outlook"></span><div><h3>Notifications in familiar tools</h3><p>Power Automate would send update requests and alerts through Outlook. It’s designed around standard connectors, so it shouldn’t need premium licenses.</p></div></li>
         </ul>
       </section>
