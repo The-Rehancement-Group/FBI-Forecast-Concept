@@ -30,7 +30,7 @@ img{display:block}
 .btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .heading{padding-left:16px;border-left:5px solid var(--red)}
 h1{margin:0;font-size:28px;line-height:1.2;letter-spacing:-0.01em;color:var(--navy);font-weight:700}
-.lede{margin:6px 0 0;color:var(--muted);font-size:15.5px;line-height:1.45;max-width:72ch}
+.lede{margin:6px 0 0;color:var(--muted);font-size:15.5px;line-height:1.45}
 .player{background:var(--navy);border-radius:10px;overflow:hidden;box-shadow:0 14px 40px rgba(33,50,95,.22);aspect-ratio:16/9}
 .player video{display:block;width:100%;height:100%}
 .runs{display:flex;align-items:center;gap:8px 20px;flex-wrap:wrap;color:var(--muted);font-size:13px}
@@ -39,16 +39,25 @@ h1{margin:0;font-size:28px;line-height:1.2;letter-spacing:-0.01em;color:var(--na
 .prod img{width:22px;height:22px}
 
 .panel{display:flex;flex-direction:column;background:var(--white);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.tabs{flex:none;display:flex;border-bottom:1px solid var(--line)}
-.tabs button{flex:1;font:inherit;font-size:14px;font-weight:600;color:var(--muted);background:none;border:0;border-bottom:3px solid transparent;padding:14px 6px 11px;cursor:pointer;white-space:nowrap}
-.tabs button:hover{color:var(--ink)}
-.tabs button[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--red)}
+.pick{flex:none;margin:0;padding:12px 16px 0;font-size:13px;font-weight:600;color:var(--ink)}
+.tabs{flex:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:8px 16px 14px;border-bottom:1px solid var(--line)}
+.tabs button{display:flex;align-items:center;gap:8px;text-align:left;font:inherit;font-size:13.5px;font-weight:600;line-height:1.25;color:var(--navy);background:var(--white);border:1.5px solid #B9C3D6;border-radius:8px;padding:9px 10px;cursor:pointer;box-shadow:0 1px 2px rgba(20,30,60,.06)}
+.tabs .n{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--tint);color:var(--navy);font-size:13px;font-weight:700}
+.tabs button:hover{border-color:var(--navy);background:#F7F9FC}
+.tabs button[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:var(--white);box-shadow:0 3px 10px rgba(33,50,95,.25)}
+.tabs button[aria-selected="true"] .n{background:var(--white);color:var(--navy)}
+.pnav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.pnav button{font:inherit;font-size:14px;font-weight:600;border-radius:7px;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.pnav .nx{background:var(--navy);color:var(--white);border:1.5px solid var(--navy)}
+.pnav .nx:hover{background:#18264A}
+.pnav .bk{background:var(--white);color:var(--navy);border:1.5px solid #B9C3D6}
+.pnav .bk:hover{border-color:var(--navy)}
 .pbody{flex:1;min-height:0;padding:20px 24px 16px}
 .pbody .intro{margin:0 0 10px;color:var(--muted);font-size:14px}
 [role=tabpanel][hidden]{display:none}
 
 .steps{list-style:none;margin:0;padding:0;counter-reset:s}
-.steps li{position:relative;padding:0 0 13px 48px}
+.steps li{position:relative;padding:0 0 11px 48px}
 .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;border:2px solid var(--navy);display:grid;place-items:center;font-weight:700;color:var(--navy);background:var(--white);z-index:1}
 .steps li::after{content:"";position:absolute;left:15px;top:34px;bottom:2px;width:2px;background:var(--line)}
 .steps li:last-child{padding-bottom:0}
@@ -80,7 +89,7 @@ footer p{margin:0}
 /* ---------- desktop and landscape tablets: fixed canvas scaled to fit, never scrolls ---------- */
 @media (orientation:landscape) and (min-width:900px){
   html,body{height:100%;overflow:hidden}
-  .canvas{position:absolute;left:50%;top:50%;width:1440px;height:810px;transform:translate(-50%,-50%) scale(var(--s,1));transform-origin:center center;display:flex;flex-direction:column;background:var(--paper)}
+  .canvas{position:absolute;left:50%;top:50%;width:1440px;height:860px;transform:translate(-50%,-50%) scale(var(--s,1));transform-origin:center center;display:flex;flex-direction:column;background:var(--paper)}
   .stage{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 470px;gap:28px;padding:20px 28px 12px}
   .left{display:flex;flex-direction:column;justify-content:center;gap:14px;min-height:0}
   .player{width:100%}
@@ -88,7 +97,7 @@ footer p{margin:0}
   .pbody{overflow-y:auto}
   footer{padding:6px 28px 12px}
   .backdrop{position:fixed;inset:0;background:var(--paper)}
-  .topfill{position:fixed;left:0;right:0;top:0;height:calc(50vh - 405px * var(--s,1) + 64px * var(--s,1));background:var(--white);border-bottom:1px solid var(--line)}
+  .topfill{position:fixed;left:0;right:0;top:0;height:calc(50vh - 430px * var(--s,1) + 64px * var(--s,1));background:var(--white);border-bottom:1px solid var(--line)}
 }
 
 /* ---------- phones and portrait tablets: simple stacked page ---------- */
@@ -101,7 +110,9 @@ footer p{margin:0}
   h1{font-size:23px}
   .lede{font-size:15px}
   .runs{margin:14px 0 22px;font-size:12.5px}
-  .tabs button{flex:1 1 0;white-space:normal;line-height:1.25;font-size:13.5px;padding:12px 6px 10px}
+  .tabs{padding:8px 12px 12px;gap:6px}
+  .tabs button{flex-direction:column;align-items:flex-start;gap:5px;font-size:13px;padding:8px}
+  .pick{padding:12px 12px 0}
   .pbody{padding:20px 18px}
   .contact{padding:14px 18px}
   footer{padding:18px 18px 28px;max-width:760px;margin:0 auto}
@@ -129,7 +140,7 @@ footer p{margin:0}
 <main class="stage">
   <div class="left">
     <div class="heading"><h1>A current forecast to support the FBI’s small business mission</h1>
-    <p class="lede">A concept to reduce the effort of collecting, checking, and consolidating forecast updates, giving the Small Business Program more time for acquisition teams and small business outreach.</p></div>
+    <p class="lede">The FBI’s Small Business Program helps ensure small businesses receive consideration in the acquisitions that support the Bureau’s mission. This concept is designed to reduce the effort of collecting, checking, and consolidating forecast updates, giving the SBP more time to work with acquisition teams and small businesses.</p></div>
     <div class="player">
       <video controls preload="metadata" playsinline poster="assets/poster.jpg" aria-label="Two-minute walkthrough of the forecast management concept">
         <source src="assets/forecast-walkthrough.mp4" type="video/mp4">
@@ -146,14 +157,14 @@ footer p{margin:0}
   </div>
 
   <aside class="panel" aria-label="About the concept">
+    <p class="pick">Select a topic to learn more</p>
     <div class="tabs" role="tablist" aria-label="About the concept">
-      <button role="tab" id="t1" aria-controls="p1" aria-selected="true">Value to the SBP</button>
-      <button role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">How it works</button>
-      <button role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1">Why Power Platform</button>
+      <button role="tab" id="t1" aria-controls="p1" aria-selected="true"><span class="n">1</span><span class="tl">Value to the SBP</span></button>
+      <button role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1"><span class="n">2</span><span class="tl">How it works</span></button>
+      <button role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1"><span class="n">3</span><span class="tl">Why Power Platform</span></button>
     </div>
     <div class="pbody">
       <section role="tabpanel" id="p1" aria-labelledby="t1">
-        <p class="intro">The forecast is often where small businesses first learn about upcoming FBI requirements. Keeping it current helps give small business interests maximum consideration.</p>
         <ul class="helps">
           <li><h3>Less time chasing updates</h3><p>Targeted requests and response tracking reduce manual follow-up with requirement owners.</p></li>
           <li><h3>More current information for acquisition discussions</h3><p>Consistent descriptions, dates, and acquisition approaches give a stronger starting point with requirement owners and contracting staff.</p></li>
@@ -161,15 +172,16 @@ footer p{margin:0}
           <li><h3>Review effort focused where judgment matters</h3><p>Routine checks flag missing details and formatting issues, so review time goes to changes that need a decision.</p></li>
           <li><h3>A simpler submission</h3><p>Approved entries export directly to DOJ’s format, with no consolidation or reformatting.</p></li>
         </ul>
+        <div class="pnav"><span></span><button class="nx" data-go="t2">Next: How it works <span aria-hidden="true">→</span></button></div>
       </section>
       <section role="tabpanel" id="p2" aria-labelledby="t2" hidden>
-        <p class="intro">From the person who owns the requirement to DOJ’s format, with the Small Business POC approving every change.</p>
         <ol class="steps">
           <li><span class="who">Requirement owner</span><h3>Enters or updates an entry</h3><p>A guided form with picklists. Checks confirm required details before it’s submitted.</p></li>
           <li><span class="who">Small Business POC</span><h3>Gets an email right away</h3><p>Key details and open items, one click from the submission.</p></li>
           <li><span class="who">Small Business POC</span><h3>Reviews and approves</h3><p>Changes shown side by side. Approve, adjust, or send back with a note.</p></li>
           <li><span class="who">Small Business POC</span><h3>Exports in DOJ’s format</h3><p>DOJ’s 34-column layout, ready to submit with no reformatting.</p></li>
         </ol>
+        <div class="pnav"><button class="bk" data-go="t1"><span aria-hidden="true">←</span> Back</button><button class="nx" data-go="t3">Next: Why Power Platform <span aria-hidden="true">→</span></button></div>
       </section>
       <section role="tabpanel" id="p3" aria-labelledby="t3" hidden>
         <p class="intro">The concept is designed for tools that are part of Microsoft 365.</p>
@@ -178,6 +190,7 @@ footer p{margin:0}
           <li><span class="icons"><img src="assets/power-apps.png" alt="Power Apps"></span><div><h3>Familiar Microsoft tools</h3><p>The app would be built in Power Apps, part of Microsoft 365, rather than as separate software.</p></div></li>
           <li><span class="icons"><img src="assets/power-automate.png" alt="Power Automate"><img src="assets/outlook.png" alt="Outlook"></span><div><h3>Notifications in familiar tools</h3><p>Power Automate would send update requests and alerts through Outlook. It’s designed around standard connectors, so it shouldn’t need premium licenses.</p></div></li>
         </ul>
+        <div class="pnav"><button class="bk" data-go="t1"><span aria-hidden="true">←</span> Back to start</button><span></span></div>
       </section>
     </div>
     <div class="contact">
@@ -199,9 +212,10 @@ footer p{margin:0}
 <script>
 const tabs=[...document.querySelectorAll('[role=tab]')];
 function select(t){tabs.forEach(b=>{const on=b===t;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;document.getElementById(b.getAttribute('aria-controls')).hidden=!on})}
+document.querySelectorAll('.pnav button').forEach(b=>b.addEventListener('click',()=>{const t=document.getElementById(b.dataset.go);select(t);t.focus()}));
 tabs.forEach((t,i)=>{t.addEventListener('click',()=>select(t));t.addEventListener('keydown',e=>{let j=null;if(e.key==='ArrowRight')j=(i+1)%tabs.length;if(e.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;if(e.key==='Home')j=0;if(e.key==='End')j=tabs.length-1;if(j!==null){e.preventDefault();select(tabs[j]);tabs[j].focus()}})});
 const desk=matchMedia('(orientation:landscape) and (min-width:900px)');
-function fit(){document.documentElement.style.setProperty('--s',desk.matches?Math.min(innerWidth/1440,innerHeight/810):1)}
+function fit(){document.documentElement.style.setProperty('--s',desk.matches?Math.min(innerWidth/1440,innerHeight/860):1)}
 addEventListener('resize',fit);desk.addEventListener('change',fit);fit();
 </script>
 </body>
